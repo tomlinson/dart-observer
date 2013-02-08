@@ -1,18 +1,20 @@
 library observer;
 
+import 'dart:collection';
+
 typedef void Notifier();
 class Observable {
-  List<Notifier> notifiers = new List<Notifier>();
+  HashMap<Notifier, Object> notifiers = new HashMap<Notifier, Object>();
   
   observe (Notifier notifier) {
-    notifiers.add(notifier);
+    notifiers[notifier] = null;
   }
   
   remove (Notifier notifier) {
-    notifiers.removeAt(notifiers.indexOf(notifier));
+    notifiers.remove(notifier);
   }
   
   notify () {
-    notifiers.forEach((Notifier notifier) => notifier());
+    notifiers.forEach((Notifier notifier, Object) => notifier());
   }
 }
